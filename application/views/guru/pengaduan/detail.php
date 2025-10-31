@@ -8,14 +8,14 @@
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('siswa/dashboard'); ?>"
+                            <a href="<?= site_url('guru/dashboard'); ?>"
                                 class="text-muted text-hover-primary">Beranda</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('siswa/pengaduan'); ?>" class="text-muted text-hover-primary">Data
+                            <a href="<?= site_url('guru/pengaduan'); ?>" class="text-muted text-hover-primary">Data
                                 Laporan</a>
                         </li>
                         <li class="breadcrumb-item">
@@ -124,7 +124,7 @@
                                                             </p>
                                                         <?php else: ?>
                                                             <h5 class="text-primary mb-5">Beri Feedback untuk Tanggapan Ini:</h5>
-                                                            <?= form_open('siswa/pengaduan/beri_kepuasan/' . $balas->id_balasan, ['class' => 'w-100']); ?>
+                                                            <?= form_open('guru/pengaduan/beri_kepuasan/' . $balas->id_balasan, ['class' => 'w-100']); ?>
                                                             <input type="hidden" name="id_pengaduan"
                                                                 value="<?= $pengaduan->id_pengaduan; ?>">
                                                             <input type="hidden" name="id_kategori"

@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="required form-label">Kategori</label>
-                                <select name="id_kategori" class="form-control mb-2" data-control="select2"
+                                <select name="id_kategori" class="form-select mb-2" data-control="select2"
                                     data-placeholder="Pilih Kategori" required>
                                     <option value="" disabled selected>Pilih Kategori</option>
                                     <?php foreach ($kategori as $k): ?>

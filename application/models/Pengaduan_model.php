@@ -58,7 +58,14 @@ class Pengaduan_model extends CI_Model
 
     public function get_pengaduan_detail_for_user($id_pengaduan, $user_id)
     {
-        $pengaduan = $this->db->get_where('pengaduan', ['id_pengaduan' => $id_pengaduan, 'user_id' => $user_id])->row();
+        $this->db->select('p.*, k.nama_kategori, COUNT(b.id_balasan) as jumlah_balasan');
+        $this->db->from('pengaduan p');
+        $this->db->join('kategori k', 'p.id_kategori = k.id_kategori', 'left');
+        $this->db->join('balasan b', 'p.id_pengaduan = b.id_pengaduan', 'left');
+        $this->db->where('p.id_pengaduan', $id_pengaduan);
+        $this->db->where('p.user_id', $user_id);
+        $this->db->group_by('p.id_pengaduan');
+        $pengaduan = $this->db->get()->row();
 
         if ($pengaduan) {
             $this->db->select('b.*, s.status');
@@ -70,7 +77,9 @@ class Pengaduan_model extends CI_Model
             $pengaduan->balasan = $balasan;
 
             foreach ($pengaduan->balasan as &$balas) {
-                $balas->kepuasan = $this->db->get_where('kepuasan', ['id_balasan' => $balas->id_balasan])->row();
+                $balas->kepuasan = $this->db
+                    ->get_where('kepuasan', ['id_balasan' => $balas->id_balasan])
+                    ->row();
             }
         }
 

@@ -44,9 +44,11 @@ class Tanggapan_model extends CI_Model
         $balasan_list = $this->db->get()->result();
 
         foreach ($balasan_list as $balasan) {
-            $this->db->where('id_balasan', $balasan->id_balasan);
-            $kepuasan = $this->db->get('kepuasan')->row();
+            $kepuasan = $this->db->get_where('kepuasan', ['id_balasan' => $balasan->id_balasan])->row();
             $balasan->sudah_diberi_kepuasan = ($kepuasan != null);
+            if ($kepuasan) {
+                $balasan->kepuasan = $kepuasan;
+            }
         }
 
         return $balasan_list;

@@ -6,6 +6,7 @@
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Histori Laporan
                     </h1>
+                    <?php $this->load->helper('iddate'); ?>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
                             <a href="<?= site_url('siswa/dashboard'); ?>"
@@ -90,7 +91,7 @@
                                             <td><?= $no++; ?></td>
                                             <td><?= htmlspecialchars($pengaduan->judul); ?></td>
                                             <td><?= htmlspecialchars($pengaduan->nama_kategori); ?></td>
-                                            <td><?= date('d F Y', strtotime($pengaduan->date)); ?></td>
+                                            <td><?= IdDate($pengaduan->date); ?></td>
                                             <td>
                                                 <?php if ($pengaduan->jumlah_balasan > 0): ?>
                                                     <span class="badge badge-light-success">Sudah Ditanggapi</span>

@@ -6,6 +6,7 @@
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Detail Laporan
                     </h1>
+                    <?php $this->load->helper('iddate'); ?>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
                             <a href="<?= site_url('guru/dashboard'); ?>"
@@ -39,7 +40,7 @@
                                             <div class="me-9 my-1 d-flex align-items-center">
                                                 <i class="ki-outline ki-calendar-8 text-primary fs-2 me-2"></i>
                                                 <span class="fw-bold text-gray-500">
-                                                    <?= date('d F Y', strtotime($pengaduan->date)); ?>
+                                                    <?= IdDate($pengaduan->date); ?>
                                                 </span>
                                             </div>
 
@@ -96,7 +97,7 @@
                                                     </span>
                                                     <span class="fs-7 text-muted">
                                                         Dibalas pada:
-                                                        <?= date('d F Y', strtotime($balas->created_at ?? time())); ?>
+                                                        <?= IdDate($balas->date ?? time()); ?>
                                                     </span>
                                                 </div>
 

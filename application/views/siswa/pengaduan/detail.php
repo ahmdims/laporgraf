@@ -96,8 +96,7 @@
                                                         <?= htmlspecialchars($balas->status); ?>
                                                     </span>
                                                     <span class="fs-7 text-muted">
-                                                        Dibalas pada:
-                                                        <?= IdDate($balas->date ?? time()); ?>
+                                                        Dibalas pada: <?= IdDate($balas->date ?? time()); ?>
                                                     </span>
                                                 </div>
 
@@ -109,15 +108,16 @@
                                                     <div class="fs-6 w-100">
                                                         <?php if (isset($balas->kepuasan) && $balas->kepuasan): ?>
                                                             <h5 class="text-success fw-bold mb-4">Anda sudah memberi feedback:</h5>
-                                                            <div class="rating">
+                                                            <div class="rating mb-2">
                                                                 <?php for ($i = 0; $i < 5; $i++): ?>
-                                                                    <div
-                                                                        class="rating-label me-2 <?= ($i < $balas->kepuasan->rating) ? 'checked' : ''; ?>">
-                                                                        <i class="ki-outline ki-star fs-2"></i>
+                                                                    <div class="rating-label me-2">
+                                                                        <?php if ($i < $balas->kepuasan->rating): ?>
+                                                                            <i class="ki-solid ki-star fs-2 text-warning"></i>
+                                                                        <?php else: ?>
+                                                                            <i class="ki-outline ki-star fs-2"></i>
+                                                                        <?php endif; ?>
                                                                     </div>
                                                                 <?php endfor; ?>
-                                                                <span
-                                                                    class="fw-bold fs-6 ms-2">(<?= $balas->kepuasan->rating; ?>/5)</span>
                                                             </div>
                                                             <p class="mt-4 fs-6 text-gray-700">
                                                                 <strong>Komentar: </strong>

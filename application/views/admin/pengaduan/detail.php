@@ -8,15 +8,16 @@
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('manajemen/dashboard'); ?>"
+                            <a href="<?= site_url('admin/dashboard'); ?>"
                                 class="text-muted text-hover-primary">Beranda</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            <a href="<?= site_url('manajemen/pengaduan'); ?>" class="text-muted text-hover-primary">Data
-                                Pengaduan</a>
+                            <a href="<?= site_url('admin/pengaduan'); ?>" class="text-muted text-hover-primary">
+                                Data Laporan
+                            </a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
@@ -51,14 +52,12 @@
                                                     <?= htmlspecialchars($pengaduan->nama_kategori); ?>
                                                 </span>
                                             </div>
-                                            <?php if (!empty($pengaduan->tempat)): ?>
-                                                <div class="me-9 my-1 d-flex align-items-center">
-                                                    <i class="ki-outline ki-geolocation text-primary fs-2 me-2"></i>
-                                                    <span class="fw-bold text-gray-500">
-                                                        <?= htmlspecialchars($pengaduan->tempat); ?>
-                                                    </span>
-                                                </div>
-                                            <?php endif; ?>
+                                            <div class="me-9 my-1 d-flex align-items-center">
+                                                <i class="ki-outline ki-geolocation text-primary fs-2 me-2"></i>
+                                                <span class="fw-bold text-gray-500">
+                                                    <?= htmlspecialchars($pengaduan->tempat); ?>
+                                                </span>
+                                            </div>
                                             <div class="me-9 my-1 d-flex align-items-center">
                                                 <i class="ki-outline ki-profile-user text-primary fs-2 me-2"></i>
                                                 <span class="fw-bold text-gray-500">
@@ -87,8 +86,13 @@
                                 </div>
 
                                 <div class="mb-17">
-                                    <h3 class="text-gray-900 mb-5">Tanggapan</h3>
+                                    <h3 class="text-gray-900 mb-5">Tanggapan dari Manajemen</h3>
                                     <div class="separator separator-dashed mb-9"></div>
+
+                                    <?php if (empty($balasan_list)): ?>
+                                        <p class="text-center text-gray-500 fs-6">Belum ada tanggapan untuk pengaduan ini.
+                                        </p>
+                                    <?php endif; ?>
                                     <?php foreach ($balasan_list as $balas): ?>
                                         <div class="mb-10">
                                             <div class="d-flex align-items-center mb-4 justify-content-between">
@@ -104,33 +108,7 @@
                                                 <?php
                                                 $kepuasan_diberikan = isset($balas->sudah_diberi_kepuasan) && $balas->sudah_diberi_kepuasan;
                                                 ?>
-                                                <?php if (!$kepuasan_diberikan): ?>
-                                                    <div class="text-end">
-                                                        <a href="#"
-                                                            class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
-                                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                            Aksi
-                                                            <i class="ki-outline ki-down fs-5 ms-1"></i>
-                                                        </a>
-                                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                                            data-kt-menu="true">
-                                                            <div class="menu-item px-3">
-                                                                <a href="<?= site_url('manajemen/pengaduan/edit_tanggapan/' . $balas->id_balasan); ?>"
-                                                                    class="menu-link px-3">
-                                                                    Ubah
-                                                                </a>
-                                                            </div>
-                                                            <div class="menu-item px-3">
-                                                                <a href="<?= site_url('manajemen/pengaduan/hapus_tanggapan/' . $balas->id_balasan); ?>"
-                                                                    class="menu-link px-3 btn-hapus-tanggapan"
-                                                                    data-id="<?= $balas->id_balasan; ?>"
-                                                                    data-url="<?= site_url('manajemen/pengaduan/hapus_tanggapan/' . $balas->id_balasan); ?>">
-                                                                    Hapus
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                <?php endif; ?>
+                                                <!-- Tidak ada tombol edit/hapus di admin -->
                                             </div>
                                             <div class="fs-5 fw-semibold text-gray-600 mb-7">
                                                 <p><?= nl2br(htmlspecialchars($balas->isi_balasan)); ?></p>
@@ -160,39 +138,9 @@
                             <?php endforeach; ?>
                         </div>
 
-                        <?php if (!$sudah_ditanggapi): ?>
-                            <div class="border-1 border-dashed card-rounded p-5 p-lg-10 mb-14">
-                                <div class="fs-6 w-100">
-                                    <h5 class="text-primary mb-5">Beri Tanggapan untuk Pengaduan Ini:</h5>
-                                    <?= form_open('manajemen/pengaduan/beri_tanggapan/' . $pengaduan->id_pengaduan, ['class' => 'w-100']); ?>
-                                    <input type="hidden" name="id_kategori" value="<?= $pengaduan->id_kategori; ?>">
-                                    <div class="mb-5">
-                                        <label class="form-label fw-semibold">Isi Tanggapan</label>
-                                        <textarea name="isi_balasan" class="form-control form-control w-100" rows="4"
-                                            placeholder="Tulis tanggapan Anda..." required></textarea>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label class="form-label fw-semibold">Ubah Status</label>
-                                        <div class="col-12">
-                                            <select name="id_status" class="form-select form-select w-100"
-                                                data-control="select2" data-hide-search="true" required>
-                                                <option value="" disabled selected>Pilih Status</option>
-                                                <?php foreach ($status_list as $status): ?>
-                                                    <option value="<?= $status->id_status; ?>">
-                                                        #<?= $status->id_status; ?>         <?= htmlspecialchars($status->status); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-success">Kirim Tanggapan</button>
-                                    <?= form_close(); ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
 
                         <div class="d-flex justify-content-start">
-                            <a href="<?= site_url('manajemen/pengaduan'); ?>" class="btn btn-light me-3">
+                            <a href="<?= site_url('admin/pengaduan'); ?>" class="btn btn-light me-3">
                                 <i class="ki-outline ki-arrow-left"></i>
                                 Kembali ke Daftar Pengaduan
                             </a>
